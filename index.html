@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            width: 80%;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <img data-src="./imgs/8.jpg" alt="">
+    <img data-src="./imgs/14.jpg" alt="">
+    <img data-src="./imgs/18.jpg" alt="">
+    <img data-src="./imgs/21.jpg" alt="">
+    <img data-src="./imgs/3.jpg" alt="">
+    <img data-src="./imgs/6.jpg" alt="">
+    <img data-src="./imgs/7.jpg" alt="">
+    <script>
+        const imgs = [...document.getElementsByTagName('img')];
+        if(IntersectionObserver){
+            let lazyLoadObserver = new IntersectionObserver((entries,observer)=>{
+                entries.forEach((entry,index)=>{
+                    let lazyImage = entry.target;
+                    if(entry.intersectionRatio > 0){
+                        lazyImage.src = lazyImage.getAttribute('data-src');
+                        lazyLoadObserver.unobserve(lazyImage);
+                    }
+                })
+            })
+            for(let i = 0; i < imgs.length; i++){
+                lazyLoadObserver.observe(imgs[i])
+            }
+        }
+    </script>
+</body>
+</html>
